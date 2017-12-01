@@ -2,7 +2,7 @@ import React from 'react';
 
 class AddFishForm extends React.Component {
 
-  CreateFish(event) {
+  CreateFish(event) {  // create a fish object from the input
     const fish = {
     name: this.name.value,
     price: this.price.value,

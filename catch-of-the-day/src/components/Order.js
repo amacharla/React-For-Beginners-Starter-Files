@@ -1,10 +1,6 @@
 import React from 'react';
 import { formatPrice } from '../helpers';
 
-/**
- * Shows whats fish is in the cart
- * @extends React
- */
 class Order extends React.Component {
 
   constructor () {
@@ -15,7 +11,7 @@ class Order extends React.Component {
   /**
    * Render function that renders list items fishname and price
    * @param  {string} key [unique identifier for listitem `fist-timestamp`]
-   * @return {li} [lbs FishName $FishPrice]
+   * @return {html element <li>} [lbs FishName $FishPrice]
    */
   renderOrder(key) {
     const fish = this.props.fishes[key];
@@ -23,7 +19,7 @@ class Order extends React.Component {
 
     if(!fish || fish.status === 'unavailable') {
       <li key={key}>
-        Sorry, {fish ? fish.name : 'fish'} is no longer available
+        Sorry, {fish ? fish.name : 'fish'} is no longer available!
       </li>
     }
 

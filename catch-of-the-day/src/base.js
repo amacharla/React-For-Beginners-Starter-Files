@@ -1,6 +1,7 @@
 import Rebase from 're-base';
 /*
- * FireBase configuration function 
+ * Connection to Firebase database
+ * configuration function using Re-Base
  * @type {object of FireBase}
  */
 const base = Rebase.createClass({

@@ -28,11 +28,37 @@ class App extends React.Component {
     };
   }
 
+  /**
+   * Allow App Component to sync with firebase state before rendering
+   * Runs right before <App> is rendered
+   */
   componentWillMount() {
+   // ref is used to access binding later in Unmount
     this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {context: this, state: 'fishes'});
+
+    //check if there is any order in LocalStorage
+    const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
+    if(localStorageRef) {
+      //if there is stuff in local storage then update State with orders
+      this.setState({ order: JSON.parse(localStorageRef) });
+    }
   }
 
+  /**
+   * Stop syncing when storeId is changed by unbinding
+   */
   componentWillUnmount() { base.removeBinding(this.ref); }
+
+  /**
+   * Runs everytime when a state or props is updated
+   * @param  {object} nextProps [access to Apps's props]
+   * @param  {object} nextState [access to Apps's State]
+   */
+  componentWillUpdate(nextProps, nextState) {
+    localStorage.setItem(  //adds order to browsers local storage
+      `order-${nextProps.params.storeId}`, //key: order-storeId
+      JSON.stringify(nextState.order));     //value: {fish-timestampt: count}
+  }
 
   /**
    * adds fish object to fishes obj dict and updates state with new fish
@@ -81,7 +107,7 @@ class App extends React.Component {
              <Fish key={key} index={key} details={this.state.fishes[key]}  addToOrder={this.addToOrder} />)}
         </ul>
       </div>
-      <Order fishes={this.state.fishes} order={this.state.order}/>
+      <Order fishes={this.state.fishes} order={this.state.order} params={this.props.params}/>
       <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
     </div>
     )

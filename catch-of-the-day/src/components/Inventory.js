@@ -1,6 +1,11 @@
 import React from 'react';
 import AddFishForm from './AddFishForm';
 
+/**
+ * Allows adding new fish items
+ * Loads sample fishes with button
+ * @extends React
+ */
 class Inventory extends React.Component {
   render () {
     return (

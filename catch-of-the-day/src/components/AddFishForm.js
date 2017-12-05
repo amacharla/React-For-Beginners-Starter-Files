@@ -1,7 +1,16 @@
 import React from 'react';
 
+/**
+ * Creates new fish 
+ * @extends React
+ */
 class AddFishForm extends React.Component {
 
+  /**
+   * creates a new fish object from given information input from form
+   * @param  {listener} event [onSubmit listener?]
+   * @return {object} [creates a `fish` object with respective info]
+   */
   createFish(event) {  // create a fish object from the input
     event.preventDefault();
     const fish = {

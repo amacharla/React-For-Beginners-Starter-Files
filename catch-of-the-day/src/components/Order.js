@@ -1,6 +1,10 @@
 import React from 'react';
 import { formatPrice } from '../helpers';
 
+/**
+ * Shows whats fish is in the cart
+ * @extends React
+ */
 class Order extends React.Component {
 
   constructor () {
@@ -8,6 +12,11 @@ class Order extends React.Component {
     this.renderOrder = this.renderOrder.bind(this);
   }
 
+  /**
+   * Render function that renders list items fishname and price
+   * @param  {string} key [unique identifier for listitem `fist-timestamp`]
+   * @return {li} [lbs FishName $FishPrice]
+   */
   renderOrder(key) {
     const fish = this.props.fishes[key];
     const count = this.props.order[key];

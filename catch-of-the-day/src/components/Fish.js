@@ -1,6 +1,10 @@
 import React from 'react';
 import { formatPrice } from '../helpers';
 
+/**
+ * Fish component that shows info about fish.
+ * @extends React
+ */
 class Fish extends React.Component {
   render (){
     // dont have to constantly say this.props.details.____

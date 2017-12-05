@@ -1,8 +1,16 @@
 import React from 'react';
 import { getFunName } from '../helpers';
 
+/**
+ * Storename > storeId > URI
+ * @extends React
+ */
 class StorePicker extends React.Component {
 
+  /**
+   * Transitions to App
+   * @param  {Listener} event [onSubmit]
+   */
   gotToStore(event) {
     event.preventDefault(); // prevent the default action of js -refreshing
     const storeId = this.storeInput.value; //getting value from input

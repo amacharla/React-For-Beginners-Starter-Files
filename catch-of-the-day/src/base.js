@@ -1,5 +1,8 @@
 import Rebase from 're-base';
-
+/*
+ * FireBase configuration function 
+ * @type {object of FireBase}
+ */
 const base = Rebase.createClass({
   // taken from FIREBASE
   apiKey: "AIzaSyDbNfDG917Q5FiixEGMbX7ZpmSOWvCr3qc",

@@ -5,6 +5,10 @@ import StorePicker from './components/StorePicker';
 import App from './components/App';
 import NotFound from './components/NotFound';
 import './css/style.css';
+/**
+ * Index file which is responsible for page uri and nav
+ * using React Router: BrowserRouter, Match, Miss
+ */
 
 const Root = () => {
   return (

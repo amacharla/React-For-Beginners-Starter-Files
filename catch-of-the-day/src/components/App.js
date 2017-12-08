@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from './Header';
+import Fish from './Fish';
 import Order from './Order';
 import Inventory from './Inventory';
-import sampleFishes from '../sample-fishes';
-import Fish from './Fish';
 import base from '../base';
+import sampleFishes from '../sample-fishes';
 
 /**
  * MAIN CLASS which is responsible State managemnt and Application layout
@@ -21,6 +21,10 @@ class App extends React.Component {
     this.addFish = this.addFish.bind(this); // addFish can access
     this.loadSamples = this.loadSamples.bind(this); // addFish can access
     this.addToOrder = this.addToOrder.bind(this); // addFish can access
+    this.removeOrder = this.removeOrder.bind(this); // addFish can access
+    this.reduceOrder = this.reduceOrder.bind(this); // addFish can access
+    this.updateFish = this.updateFish.bind(this); // addFish can access
+    this.removeFish = this.removeFish.bind(this); // addFish can access
     // initial state
     this.state = {
       fishes: {},
@@ -34,7 +38,10 @@ class App extends React.Component {
    */
   componentWillMount() {
    // ref is used to access binding later in Unmount
-    this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {context: this, state: 'fishes'});
+    this.ref = base.syncState(`${this.props.params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
 
     //check if there is any order in LocalStorage
     const localStorageRef = localStorage.getItem(`order-${this.props.params.storeId}`);
@@ -74,6 +81,22 @@ class App extends React.Component {
     this.setState({ fishes: fishes }); // same as { fishes } -ES6
   }
 
+  updateFish(key, updatedFish) {
+    const fishes = {...this.state.fishes};
+    // update dict with old attr + changed attr
+    fishes[key] = updatedFish;
+    // tell React of the change
+    this.setState({ fishes });
+  }
+
+  removeFish(key) {
+    const fishes = {...this.state.fishes};
+    //delete fishes[key]; CANT NOT DO THIS BECAUSE OF FIREBASE
+    fishes[key] = null;
+    // tell React of the change
+    this.setState({ fishes });
+  }
+
   /**
    * loads fish objects from file when button is clicked
    * updates state with sample fishes
@@ -97,6 +120,26 @@ class App extends React.Component {
     this.setState({ order }); //same as ({ order : order}) -ES6
   }
 
+  removeOrder(key) {
+    //make a copy of the object dict
+    const order = {...this.state.order};
+    //update or remove the a fish
+    delete order[key];
+
+    //update our state
+    this.setState({ order }); //same as ({ order : order}) -ES6
+  }
+
+  reduceOrder(key) {
+    //make a copy of the object dict
+    const order = {...this.state.order};
+    //update or remove the a fish
+    order[key] = order[key] ? order[key] - 1 : this.removeOrder(key); // FIX THIS
+    //update our state
+    this.setState({ order }); //same as ({ order : order}) -ES6
+
+  }
+
   render() {
     return (
     <div className="catch-of-the-day">
@@ -104,11 +147,11 @@ class App extends React.Component {
         <Header tagline="Fresh Seafood Market" />
         <ul className="list-of-fishes">
           {Object.keys(this.state.fishes).map(key =>
-             <Fish key={key} index={key} details={this.state.fishes[key]}  addToOrder={this.addToOrder} />)}
+             <Fish key={key} index={key} details={this.state.fishes[key]}  addToOrder={this.addToOrder} reduceOrder={this.reduceOrder}/>)}
         </ul>
       </div>
-      <Order fishes={this.state.fishes} order={this.state.order} params={this.props.params}/>
-      <Inventory addFish={this.addFish} loadSamples={this.loadSamples} />
+      <Order fishes={this.state.fishes} order={this.state.order} removeOrder={this.removeOrder}/>
+      <Inventory addFish={this.addFish} loadSamples={this.loadSamples} fishes={this.state.fishes} updateFish={this.updateFish} removeFish={this.removeFish}/>
     </div>
     )
   }

@@ -22,7 +22,6 @@ class App extends React.Component {
     this.loadSamples = this.loadSamples.bind(this); // addFish can access
     this.addToOrder = this.addToOrder.bind(this); // addFish can access
     this.removeOrder = this.removeOrder.bind(this); // addFish can access
-    this.reduceOrder = this.reduceOrder.bind(this); // addFish can access
     this.updateFish = this.updateFish.bind(this); // addFish can access
     this.removeFish = this.removeFish.bind(this); // addFish can access
     // initial state
@@ -130,16 +129,6 @@ class App extends React.Component {
     this.setState({ order }); //same as ({ order : order}) -ES6
   }
 
-  reduceOrder(key) {
-    //make a copy of the object dict
-    const order = {...this.state.order};
-    //update or remove the a fish
-    order[key] = order[key] ? order[key] - 1 : this.removeOrder(key); // FIX THIS
-    //update our state
-    this.setState({ order }); //same as ({ order : order}) -ES6
-
-  }
-
   render() {
     return (
     <div className="catch-of-the-day">
@@ -147,7 +136,7 @@ class App extends React.Component {
         <Header tagline="Fresh Seafood Market" />
         <ul className="list-of-fishes">
           {Object.keys(this.state.fishes).map(key =>
-             <Fish key={key} index={key} details={this.state.fishes[key]}  addToOrder={this.addToOrder} reduceOrder={this.reduceOrder}/>)}
+             <Fish key={key} index={key} details={this.state.fishes[key]}  addToOrder={this.addToOrder} />)}
         </ul>
       </div>
       <Order fishes={this.state.fishes} order={this.state.order} removeOrder={this.removeOrder}/>
